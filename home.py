@@ -39,6 +39,8 @@ def home_page():
         - **Data:** Access and explore the data used in this analysis.
         - **Dashboard:** View visualizations and insights from the data.
     """)
+      # Display an introductory video
+    st.video("https://www.youtube.com/watch?v=gjtzlVAjS0w")
 
     # Divider for section separation
     st.write("---" * 10)
@@ -51,46 +53,6 @@ def home_page():
 # Main function to run the app
 if __name__ == "__main__":
     home_page()
-
-
-
-# import streamlit as st
-# #from PIL import Image
-
-# # Define the Home Page content
-# def home_page():
-#     # Display the project title and subtitle
-#     st.title("Customer Churn Prediction")
-#     st.subheader("Telecommunication Customer Churn Project")
-    
-#     # Project description and key features
-#     st.markdown("""
-#     Welcome to the **Customer Churn Prediction** project. This project aims to predict which customers are likely to leave the company using various machine learning models.
-
-#     ### Key Features of this Project:
-#     - **Data Exploration:** Dive deep into customer demographics, service usage, and billing information.
-#     - **Predictive Modeling:** Use models like Logistic Regression, Decision Trees, and Random Forest to predict customer churn.
-#     - **Feature Importance:** Identify the key factors that influence customer retention.
-#     - **Model Interpretation:** Explain model predictions using **LIME** and **SHAP** for transparency.
-#     """)
-    
-#     # Display an introductory video
-#     #st.video("https://www.youtube.com/watch?v=XeWfLNe3moM")
-    
-#     # Divider for section separation
-#     st.write("---" * 10)
-    
-#     # Contact information
-#     st.write("### Need Help?")
-#     st.write("Contact me on:")
-    
-    
-#     st.markdown("[LinkedIn](https://www.linkedin.com/in/geomeife-elizabeth)")
-             
-
-# # Main function to run the app
-# if __name__ == "__main__":
-#     home_page()
 
 
 
