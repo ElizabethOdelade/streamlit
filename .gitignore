@@ -1,0 +1,16 @@
+# Ignore Python cache, environments, and other common files
+# Ignore all Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore specific file uploaded
+
+__pycache__/auth.cpython-312.pyc
+__pycache__/dashboard.cpython-312.pyc
+__pycache__/data.cpython-312.pyc
+__pycache__/home.cpython-312.pyc
+__pycache__/predict.cpython-312.pyc
+
+
