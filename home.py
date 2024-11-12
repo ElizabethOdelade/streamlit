@@ -41,6 +41,7 @@ def home_page():
     """)
       # Display an introductory video
     st.video("https://www.youtube.com/watch?v=gjtzlVAjS0w")
+    st.video("https://www.youtube.com/watch?v=GVECbcKUio4&t=9242s")
 
     # Divider for section separation
     st.write("---" * 10)
