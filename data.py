@@ -50,8 +50,8 @@ def data_page():
             st.write(data)
 
         #add the path to the data
-        #dataset_path = "data/full_data.csv"
-        dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
+        dataset_path = "data/full_data.csv"
+        #dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
         #dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
         data = pd.read_csv(dataset_path)
         filter_column(data)
