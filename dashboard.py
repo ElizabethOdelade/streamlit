@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Load the data once outside of the functions to avoid reloading multiple times
-full_data = pd.read_csv("data/full_data.csv")
+full_data = pd.read_csv(r"data/full_data.csv")
 
 # Function to create the 'Churn by Gender' plot
 def dashboard_page(data):
