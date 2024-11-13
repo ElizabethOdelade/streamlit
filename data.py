@@ -55,4 +55,8 @@ def data_page():
         #dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
         data = pd.read_csv(dataset_path)
         filter_column(data)
+
+# import os
+# print(os.path.abspath("data/full_data.csv"))
+
     
