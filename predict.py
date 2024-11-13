@@ -14,10 +14,10 @@ def predict_page():
 
     # Define model paths
     models_paths = {
-        "SVM": r"C:\Users\HP\Desktop\streamlit\models\CW_SVM",
-        "DTP": r"C:\Users\HP\Desktop\streamlit\models\CW_DTP",
-        "LRP": r"C:\Users\HP\Desktop\streamlit\models\CW_LRP",
-        "RFC": r"C:\Users\HP\Desktop\streamlit\models\CW_RFC"
+        "SVM": r"C:\Users\HP\Desktop\streamlit\models\CV_SVM.pkl",
+        "DTP": r"C:\Users\HP\Desktop\streamlit\models\CW_DTP.pkl",
+        "LRP": r"C:\Users\HP\Desktop\streamlit\models\CW_LRP.pkl",
+        "RFC": r"C:\Users\HP\Desktop\streamlit\models\CW_RFC.pkl"
     }
     
     # Model selection
@@ -38,7 +38,7 @@ def predict_page():
     senior_citizen = st.selectbox("Senior Citizen", ['Yes', 'No'])
     partner = st.selectbox("Partner", ['Yes', 'No'])
     dependents = st.selectbox("Dependents", ['Yes', 'No'])
-    tenure = st.slider("Tenure (Months)", min_value=1, max_value=72, value=12)
+    #tenure = st.slider("Tenure (Months)", min_value=1, max_value=72, value=12)
     paperless_billing = st.selectbox("Paperless Billing", ['Yes', 'No'])
     payment_method = st.selectbox("Payment Method", ['Electronic check', 'Mailed check', 'Bank transfer (automatic)', 'Credit card (automatic)'])
     monthly_charges = st.number_input("Monthly Charges", min_value=0.0, value=50.0)
@@ -60,7 +60,6 @@ def predict_page():
         'SeniorCitizen': [1 if senior_citizen == 'Yes' else 0],
         'Partner': [1 if partner == 'Yes' else 0],
         'Dependents': [1 if dependents == 'Yes' else 0],
-        'tenure': [int(tenure)],
         'PaperlessBilling': [1 if paperless_billing == 'Yes' else 0],
         'PaymentMethod': [str(payment_method)],
         'MonthlyCharges': [float(monthly_charges)],
@@ -80,7 +79,7 @@ def predict_page():
     customer_df = pd.DataFrame(customer_data)
 
     # Convert numeric columns explicitly and handle any missing values
-    numeric_columns = ['tenure', 'MonthlyCharges', 'TotalCharges']
+    numeric_columns = ['MonthlyCharges', 'TotalCharges']
     for col in numeric_columns:
         customer_df[col] = pd.to_numeric(customer_df[col], errors='coerce')
 

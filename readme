@@ -1,0 +1,57 @@
+# Customer Churn Prediction using Streamlit
+
+This is a customer churn prediction web application developed using Streamlit, which allows users to predict if a customer will churn or not based on their profile information.
+
+## Project Description
+
+The project is designed to help businesses predict whether a customer will churn based on several attributes such as contract type, payment method, service usage, and more. The app utilizes different machine learning models (e.g., SVM, Decision Tree, Logistic Regression, Random Forest) to provide a churn prediction for a new customer, based on their details.
+
+### Features:
+- Select the machine learning model to use for prediction.
+- Input customer details via an easy-to-use interface.
+- Get the churn prediction (whether the customer will churn or not) based on the input.
+
+## Technologies Used
+
+Streamlit: For creating the web interface.
+Pickle: For saving and loading the machine learning models.
+pandas: For handling and processing the data.
+NumPy: For numerical operations.
+scikit-learn: For machine learning models (e.g., SVM, Logistic Regression, Decision Tree, Random Forest).
+Python: Programming language for the application.
+
+
+## Model Explanation
+
+The models used in this project are trained to predict customer churn based on various customer attributes. The models were saved using Pickleto persist the model state and used for inference in the Streamlit app.
+
+Models included:
+- **SVM**: Support Vector Machine used for classification.
+- **DTP**: Decision Tree Classifier used for making predictions.
+- **LRP**: Logistic Regression used for binary classification.
+- **RFC**: Random Forest Classifier used for ensemble learning.
+
+Each model takes the following features as input:
+- Gender
+- Senior Citizen status
+- Partner status
+- Dependents
+- Paperless Billing
+- Payment Method
+- Monthly Charges
+- Total Charges
+- Phone Service
+- Multiple Lines
+- Internet Service
+- Online Security
+- Online Backup
+- Device Protection
+- Tech Support
+- Streaming TV
+- Streaming Movies
+- Contract Type
+
+
+
+
+

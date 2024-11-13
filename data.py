@@ -12,7 +12,7 @@ def data_page():
         "SeniorCitizen": "Whether a customer is a senior citizen or not",
         "Partner": "Whether the customer has a partner or not (Yes, No)",
         "Dependents": "Whether the customer has dependents or not (Yes, No)",
-        "Tenure": "Number of months the customer has stayed with the company",
+        #"Tenure": "Number of months the customer has stayed with the company",
         "Phone Service": "Whether the customer has a phone service or not (Yes, No)",
         "MultipleLines": "Whether the customer has multiple lines or not",
         "InternetService": "Customer's internet service provider (DSL, Fiber Optic, No)",
@@ -50,7 +50,8 @@ def data_page():
             st.write(data)
 
         #add the path to the data
-        dataset_path = "data/full_data.csv"
+        #dataset_path = "data/full_data.csv"
+        dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
         #dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
         data = pd.read_csv(dataset_path)
         filter_column(data)
