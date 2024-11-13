@@ -25,6 +25,7 @@ def main():
         page = st.sidebar.selectbox("Navigate", ["Home", "Data", "Predict", "Dashboard", "Logout"])
 
         # Load your data only for pages where it's needed
+        #full_data = pd.read_csv(r"C:\Users\HP\Desktop\streamlit\data\full_data.csv") if page in ["Data", "Dashboard"] else None
         full_data = pd.read_csv(r"C:\Users\HP\Desktop\streamlit\data\full_data.csv") if page in ["Data", "Dashboard"] else None
 
         # Routing to the selected page
