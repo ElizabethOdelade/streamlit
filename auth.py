@@ -18,7 +18,7 @@ def login_form():
     password = st.text_input("password", type="password")
 
     if st.button("login"):
-        if username == "admin" and password == "password":
+        if username == "admin" and password == "admin":
             st.session_state.authenticated = True
         else:
             st.error("invalid credentials")

@@ -1,71 +1,98 @@
 import streamlit as st
+import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import pandas as pd
-
-# Load the data once outside of the functions to avoid reloading multiple times
-full_data = pd.read_csv(r"data\full_data.csv")
-
-# Function to create the 'Churn by Gender' plot
-def dashboard_page(data):
-   
-
-    # Total Customers vs. Churned Customers
-    st.subheader("Total Customers vs. Churned Customers")
-    customer_counts = data["Churn"].value_counts()
-    fig, ax = plt.subplots()
-    sns.barplot(x=customer_counts.index, y=customer_counts.values, ax=ax)
-    ax.set_xticklabels(["Active", "Churned"])
-    ax.set_ylabel("Number of Customers")
-    st.pyplot(fig)
+import os
+#from streamlit_lottie import st_lottie
+import json
+ 
+print("Current Working Directory:", os.getcwd())
+file_path = os.path.join(os.getcwd(), "data", "train_copy.csv")
+data = pd.read_csv(file_path)
+ 
+# Define the dashboard_page function
+def dashboard_page():
+ 
+    st.header("Customer Churn Dashboard")
+ 
     
-
-    # Calculate the churn rate
-    churn_counts = full_data["Churn"].value_counts()
-    churn_labels = ["Not Churned", "Churned"]
-    churn_colors = ["#1f77b4", "#ff7f0e"]  # Customize colors for better visualization
-
-    # Display pie chart
-    fig, ax = plt.subplots()
-    ax.pie(churn_counts, labels=churn_labels, autopct='%1.1f%%', startangle=80, colors=churn_colors)
-    ax.set_title("Churn Rate Distribution")
-
+    st.sidebar.title("Filters")
+ 
+    # Sidebar filters
+    gender_filter = st.sidebar.multiselect("Gender", options=data["gender"].unique(), default=data["gender"].unique())
+    internet_service_filter = st.sidebar.multiselect("Internet Service", options=data["InternetService"].unique(), default=data["InternetService"].unique())
+    contract_filter = st.sidebar.multiselect("Contract Type", options=data["Contract"].unique(), default=data["Contract"].unique())
+    payment_method_filter = st.sidebar.multiselect("Payment Method", options=data["PaymentMethod"].unique(), default=data["PaymentMethod"].unique())
+ 
+    # Filter data based on selections
+    filtered_data = data[
+        (data["gender"].isin(gender_filter)) &
+        (data["InternetService"].isin(internet_service_filter)) &
+        (data["Contract"].isin(contract_filter)) &
+        (data["PaymentMethod"].isin(payment_method_filter))
+    ]
+ 
+    # Display a summary of filtered data
+    st.write("### Summary of Filtered Data")
+    st.write(filtered_data.describe())
+ 
+    # Churn distribution
+    st.write("### Churn Distribution")
+    churn_counts = filtered_data["Churn"].value_counts()
+    fig, ax = plt.subplots(facecolor="#f2e6ff")
+    ax.pie(churn_counts, labels=churn_counts.index, autopct="%1.1f%%", startangle=90)
+    ax.axis("equal")
+    colors = ["#ff9999", "#66b3ff"]
+    ax.pie(churn_counts, labels=churn_counts.index, colors=colors, autopct="%1.1f%%", startangle=90)
+    ax.axis("equal")
+ 
     st.pyplot(fig)
-
-    fig, ax = plt.subplots(2, 2, figsize=(15, 10))
-
-    
-    # Monthly Charges Histogram for Churn = No
-    st.subheader("Monthly and Total Charges")
-    sns.histplot(full_data[full_data["Churn"] == "No"]["MonthlyCharges"], kde=True, ax=ax[0, 0], color="skyblue")
-    ax[0, 0].set_title("Monthly Charges - No Churn")
-
-    # Monthly Charges Histogram for Churn = Yes
-    sns.histplot(full_data[full_data["Churn"] == "Yes"]["MonthlyCharges"], kde=True, ax=ax[0, 1], color="salmon")
-    ax[0, 1].set_title("Monthly Charges - Churn")
-
-    # Total Charges Histogram for Churn = No
-    sns.histplot(full_data[full_data["Churn"] == "No"]["TotalCharges"], kde=True, ax=ax[1, 0], color="skyblue")
-    ax[1, 0].set_title("Total Charges - No Churn")
-
-    # Total Charges Histogram for Churn = Yes
-    sns.histplot(full_data[full_data["Churn"] == "Yes"]["TotalCharges"], kde=True, ax=ax[1, 1], color="salmon")
-    ax[1, 1].set_title("Total Charges - Churn")
-
+ 
+    # Monthly Charges Distribution
+    st.write("### Monthly Charges Distribution")
+    fig, ax = plt.subplots(facecolor="#ffebcc")
+    sns.histplot(filtered_data["MonthlyCharges"], bins=30, kde=True, ax=ax)
     st.pyplot(fig)
-
-
-    # Billing Information: Monthly Charges and Total Charges
-    st.header("Billing Information Analysis")
-    fig, ax = plt.subplots(1, 2, figsize=(15, 5))
-
-    # Monthly Charges - Violin Plot
-    sns.violinplot(x="Churn", y="MonthlyCharges", data=full_data, ax=ax[0], inner="quartile", palette="muted")
-    ax[0].set_title("Monthly Charges by Churn")
-
-    # Total Charges - Violin Plot
-    sns.violinplot(x="Churn", y="TotalCharges", data=full_data, ax=ax[1], inner="quartile", palette="muted")
-    ax[1].set_title("Total Charges by Churn")
-
+ 
+    # Total Charges vs. Tenure
+    st.write("### Total Charges vs. Tenure")
+    fig, ax = plt.subplots(facecolor="#e6f7ff")
+    sns.scatterplot(data=filtered_data, x="tenure", y="TotalCharges", hue="Churn", ax=ax)
     st.pyplot(fig)
-    
+ 
+    # Service Subscription Counts
+    st.write("### Service Subscription Counts")
+    services = ["PhoneService", "InternetService", "OnlineSecurity", "OnlineBackup", "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies"]
+    service_counts = filtered_data[services].apply(pd.Series.value_counts)
+    st.write(service_counts)
+ 
+    # Contract Type vs Churn Rate
+    st.write("### Churn Rate by Contract Type")
+    contract_churn = pd.crosstab(filtered_data['Contract'], filtered_data['Churn'], normalize='index')  # Normalize by row for percentage
+    contract_churn = contract_churn.rename({0: 'Not Churned', 1: 'Churned'}, axis=1)
+    fig, ax = plt.subplots(facecolor="#f5f5f5")
+    contract_churn.plot(kind='barh', stacked=True, ax=ax, color=['black', 'red'])
+    ax.set_ylabel('Churn Rate')
+    ax.set_title('Churn Rate by Contract Type')
+    st.pyplot(fig)
+ 
+    # Payment Method vs Churn
+    st.write("### Churn Rate by Payment Method")
+    payment_churn = pd.crosstab(filtered_data['PaymentMethod'], filtered_data['Churn'], normalize='index')  # Normalize by row for percentage
+    payment_churn = payment_churn.rename({0: 'Not Churned', 1: 'Churned'}, axis=1)
+    fig, ax = plt.subplots(facecolor="#e6f7ff")
+    payment_churn.plot(kind='bar', stacked=True, ax=ax, color=['blue', 'pink'])
+    ax.set_ylabel('Churn Rate')
+    ax.set_title('Churn Rate by Payment Method')
+    st.pyplot(fig)
+ 
+    # Internet Service vs Churn
+    st.write("### Churn Rate by Internet Service")
+    internet_churn = pd.crosstab(filtered_data['InternetService'], filtered_data['Churn'], normalize='index')  # Normalize by row for percentage
+    internet_churn = internet_churn.rename({0: 'Not Churned', 1: 'Churned'}, axis=1)
+    fig, ax = plt.subplots(facecolor="#f2e6ff")
+    internet_churn.plot(kind='bar', stacked=True, ax=ax, color=['lightgreen', 'lightblue'])
+    ax.set_ylabel('Churn Rate')
+    ax.set_title('Churn Rate by Internet Service')
+    st.pyplot(fig)
+ 

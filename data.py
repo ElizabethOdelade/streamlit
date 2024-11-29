@@ -50,7 +50,7 @@ def data_page():
             st.write(data)
 
         #add the path to the data
-        dataset_path = r"data\full_data.csv"
+        dataset_path = "data/train_copy.csv"
         #dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
         #dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
         data = pd.read_csv(dataset_path)
