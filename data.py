@@ -51,12 +51,7 @@ def data_page():
 
         #add the path to the data
         dataset_path = "data/train_copy.csv"
-        #dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
-        #dataset_path = r"C:\Users\HP\Desktop\streamlit\data\full_data.csv"
         data = pd.read_csv(dataset_path)
         filter_column(data)
-
-# import os
-# print(os.path.abspath("data/full_data.csv"))
 
     
