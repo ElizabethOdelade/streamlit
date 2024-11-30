@@ -6,7 +6,7 @@ import os
 import json
  
 print("Current Working Directory:", os.getcwd())
-file_path = os.path.join(os.getcwd(), "Data", "train_copy.csv")
+file_path = os.path.join(os.getcwd(), "data", "train_copy.csv")
 data = pd.read_csv(file_path)
  
 # Define the dashboard_page function
