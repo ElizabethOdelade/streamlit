@@ -53,7 +53,7 @@ Each model takes the following features as input:
 
 
 ##
-password to the app: admin
+username and password to the app: admin
 
 ##Note
 This application is intended solely for educational use. When applying its predictions and insights to real-world scenarios, exercise caution. 
